@@ -5,6 +5,9 @@
   "repository": "git@github-tz:tztokchad/straddles-hedge-sim.git",
   "author": "tztokchad <tz@dopex.io>",
   "license": "MIT",
+  "scripts": {
+    "sim": "node sim"
+  },
   "dependencies": {
     "black-scholes": "^1.1.0",
     "node-fetch": "2"
