@@ -1,0 +1,12 @@
+{
+  "name": "straddles-hedge-sim",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github-tz:tztokchad/straddles-hedge-sim.git",
+  "author": "tztokchad <tz@dopex.io>",
+  "license": "MIT",
+  "dependencies": {
+    "black-scholes": "^1.1.0",
+    "node-fetch": "2"
+  }
+}
