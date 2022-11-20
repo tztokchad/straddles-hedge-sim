@@ -1,9 +1,9 @@
 const bs = require("black-scholes");
 const fetch = require("node-fetch");
-const startToTs = 1641024000 + 86400 * 3; // Mar 1 2022 + 3 days
+const startToTs = 1641024000 + 86400 * 3; // Jan 1 2022 + 3 days
 const url =
   "https://min-api.cryptocompare.com/data/v2/histohour?fsym=ETH&tsym=USD&limit=72&toTs=";
-const apiKey = "";
+const apiKey = ""; // Add your CryptoCompare API Key here (optional)
 
 let aggrPnl = 0;
 const amount = 1;
@@ -11,7 +11,7 @@ const amount = 1;
 function sim(currentPrice, settlement, data) {
   const strike = currentPrice;
   const timeToExpiry = 3 / 365;
-  const volatility = 88 / 100;
+  const volatility = 85 / 100;
   const hedgeVolatility = 80 / 100;
 
   const underlyingPurchased = amount / 2;
@@ -67,9 +67,12 @@ function sim(currentPrice, settlement, data) {
   });
 }
 
-const finalTs = 1668949000;
+const finalTs = Math.floor(new Date().getTime() / 1000);
+console.log("final ts:", finalTs);
+
 (async () => {
   let isTraversing = true;
+  let currentPrice;
   let i = 0;
   let data;
   while (isTraversing) {
@@ -78,7 +81,7 @@ const finalTs = 1668949000;
       const response = await fetch(_url);
       data = (await response.json()).Data.Data;
       console.log(new Date(data[data.length - 1].time * 1000).toLocaleString());
-      const currentPrice = data[0].open;
+      currentPrice = data[0].open;
       const settlement = data[data.length - 1].close;
       sim(currentPrice, settlement, data);
       if (data[data.length - 1].time >= finalTs - 86400 * 3)
@@ -88,4 +91,5 @@ const finalTs = 1668949000;
       console.error(e.stack);
     }
   }
+  console.log(`Final return on ETH: ${(aggrPnl / currentPrice) * 100}%`);
 })();
