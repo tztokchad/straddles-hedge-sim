@@ -68,7 +68,6 @@ function sim(currentPrice, settlement, data) {
 }
 
 const finalTs = Math.floor(new Date().getTime() / 1000);
-console.log("final ts:", finalTs);
 
 (async () => {
   let isTraversing = true;
